@@ -1,65 +1,50 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 
-export default function MobileNavigation() {
+const MobileNavigation = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
-    <div className="sm:hidden">
-      {/* Mobile menu button */}
+    <div className="md:hidden">
       <button
-        type="button"
-        onClick={toggleMenu}
-        className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
-        aria-expanded={isOpen}
+        onClick={() => setIsOpen(!isOpen)}
+        className="p-2 rounded-lg hover:bg-gray-100"
       >
-        <span className="sr-only">Open main menu</span>
-        <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+          />
         </svg>
       </button>
 
-      {/* Mobile menu, show/hide based on menu state */}
-      <div className={`${isOpen ? 'block' : 'hidden'} sm:hidden`}>
-        <div className="pt-2 pb-3 space-y-1">
-          <Link
-            href="/recommendations"
-            className="block px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-blue-600"
-          >
-            Recommendations
-          </Link>
-          <Link
-            href="/clubs"
-            className="block px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-blue-600"
-          >
-            Book Clubs
-          </Link>
-          <Link
-            href="/auth/login"
-            className="block px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-blue-600"
-          >
-            Log in
-          </Link>
-          <Link
-            href="/auth/register"
-            className="block px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-blue-600"
-          >
-            Sign up
-          </Link>
-          <Link
-            href="/profile"
-            className="block px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-blue-600"
-          >
-            Profile
-          </Link>
+      {isOpen && (
+        <div className="absolute top-16 left-0 right-0 bg-white shadow-lg p-4">
+          <nav className="space-y-4">
+            <Link href="/recommendations" className="block nav-link">
+              Recommendations
+            </Link>
+            <Link href="/clubs" className="block nav-link">
+              Book Clubs
+            </Link>
+            <Link href="/auth/login" className="block nav-link">
+              Log in
+            </Link>
+            <Link href="/auth/register" className="block btn-primary text-center">
+              Sign up
+            </Link>
+            <Link href="/profile" className="block nav-link">
+              Profile
+            </Link>
+          </nav>
         </div>
-      </div>
+      )}
     </div>
   );
-} 
+};
+
+export default MobileNavigation; 
